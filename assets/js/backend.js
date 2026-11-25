@@ -399,7 +399,9 @@
   function speakerCard(s) {
     const card = el('article', 'speaker');
     const ph = el('div', 'speaker-photo');
-    if (isHttp(s.speaker_image)) ph.appendChild(photo(s.speaker_image, 160, s.speaker_fullname));
+    const placeholder = () => { ph.classList.add('no-photo'); ph.textContent = ''; const i = el('i', 'fa-solid fa-user'); i.setAttribute('aria-hidden', 'true'); ph.appendChild(i); };
+    if (isHttp(s.speaker_image)) { const img = photo(s.speaker_image, 160, s.speaker_fullname); img.onerror = placeholder; ph.appendChild(img); }
+    else placeholder();
     const txt = el('div', 'speaker-text');
     txt.append(el('h4', 'speaker-name', s.speaker_fullname), el('p', 'speaker-aff', s.speaker_affiliation));
     card.append(ph, txt);
