@@ -45,7 +45,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   <link rel="stylesheet" href="assets/styles/fa-subset.css?v=4ab62db6" />
 
   <!-- Project Stylesheet -->
-  <link rel="stylesheet" href="assets/styles/main.min.css?v=52e7fe03" />
+  <link rel="stylesheet" href="assets/styles/main.min.css?v=8009e6a2" />
 
   <!-- Tailwind utilities load after main.css, as the CDN build did, so they win ties -->
   <link rel="stylesheet" href="assets/styles/tailwind.css?v=df88851b" />
@@ -82,9 +82,23 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   }
 }
   </script>
+  <script>try{if(!sessionStorage.getItem('splash')){document.documentElement.classList.add('splash-on');}}catch(e){}</script>
 </head>
 
 <body class="font-sans bg-white text-gray-800 antialiased">
+<div id="splash" aria-hidden="true">
+  <div class="splash-inner">
+    <img src="assets/images/logos/christ_main_blue-gold.webp" width="400" height="128" alt="" class="splash-logo" />
+    <span class="splash-rule"></span>
+    <img src="assets/images/logos/saints_main.webp" width="330" height="128" alt="" class="splash-logo" />
+  </div>
+  <script>(function(){var d=document,el=d.getElementById('splash'),t0=Date.now(),done=0;
+  function hide(){if(done)return;done=1;el.classList.add('splash-out');try{sessionStorage.setItem('splash','1')}catch(e){}setTimeout(function(){el.remove();d.documentElement.classList.remove('splash-on')},500)}
+  function go(){setTimeout(hide,Math.max(0,900-(Date.now()-t0)))}
+  if(!d.documentElement.classList.contains('splash-on')){el.remove();return}
+  if(d.readyState==='complete')go();else addEventListener('load',go);
+  setTimeout(hide,3000)})();</script>
+</div>
 <!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WCSXFZ7L"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
