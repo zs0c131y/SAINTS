@@ -408,12 +408,27 @@
     svg.append(head, body);
     return svg;
   }
+  // Photos served from this site until they are uploaded to Cloudinary. A photo set in the sheet always wins.
+  const LOCAL_PHOTOS = [
+    [/ribeiro/i, 'assets/images/speakers/vinay-j-ribeiro.jpg'],
+    [/maidin/i, 'assets/images/speakers/siti-sarah-maidin.jpg'],
+    [/rathore/i, 'assets/images/speakers/vijay-singh-rathore.jpg']
+  ];
+  const localPhoto = s => (LOCAL_PHOTOS.find(p => p[0].test(s.speaker_fullname || '')) || [])[1] || '';
   function speakerCard(s) {
     const card = el('article', 'speaker');
     const ph = el('div', 'speaker-photo');
     const placeholder = () => { ph.classList.add('no-photo'); ph.textContent = ''; ph.appendChild(avatar()); };
-    if (isHttp(s.speaker_image)) { const img = photo(s.speaker_image, 160, s.speaker_fullname); img.onerror = placeholder; ph.appendChild(img); }
-    else placeholder();
+    // Sheet photo first; if it is missing or fails to load (e.g. an expired link), the local copy, then the placeholder.
+    const urls = [isHttp(s.speaker_image) ? s.speaker_image : '', localPhoto(s)].filter(Boolean);
+    const tryNext = () => {
+      const u = urls.shift();
+      if (!u) { placeholder(); return; }
+      const img = photo(u, 160, s.speaker_fullname);
+      img.onerror = tryNext;
+      ph.textContent = ''; ph.appendChild(img);
+    };
+    tryNext();
     const txt = el('div', 'speaker-text');
     txt.append(el('h4', 'speaker-name', s.speaker_fullname), el('p', 'speaker-aff', s.speaker_affiliation));
     card.append(ph, txt);
