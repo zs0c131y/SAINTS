@@ -12,6 +12,7 @@ const config: NextConfig = {
   output: 'standalone',
   reactStrictMode: true,
   poweredByHeader: false,
+  allowedDevOrigins: ['127.0.0.1', 'localhost'],
   compress: true,
   images: { formats: ['image/avif', 'image/webp'] },
 

@@ -5,12 +5,7 @@ import { getOptions, realValue } from '@/lib/content';
 import { isHttp } from '@/lib/format';
 import { APPLE_TOUCH_ICON, FAVICON_32, GTM_ID, OG_IMAGE, SITE_DESCRIPTION, SITE_NAME, SITE_TITLE, SITE_URL } from '@/lib/site';
 
-// Same cascade order as the original static site: fonts, icons, project CSS, then Tailwind (which wins ties).
-import '@/styles/fonts.css';
-import '@/styles/fa-subset.css';
-import '@/styles/main.css';
-import '@/styles/extras.css';
-import '@/styles/tailwind.css';
+import './globals.css';
 
 export const viewport: Viewport = { width: 'device-width', initialScale: 1, themeColor: '#081330' };
 

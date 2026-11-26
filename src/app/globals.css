@@ -1,0 +1,61 @@
+/* Cascade, lowest to highest, exactly as the original static site loaded it: the hand-written design,
+   Tailwind's preflight, then Tailwind utilities. These are deliberately NOT in cascade layers: the design
+   relies on plain specificity-and-order, e.g. ID selectors in main.css beating utility classes. */
+@layer theme;
+@import 'tailwindcss/theme.css' layer(theme);
+
+@import '../styles/fonts.css';
+@import '../styles/fa-subset.css';
+@import '../styles/main.css';
+@import '../styles/extras.css';
+@import 'tailwindcss/preflight.css';
+@import '../styles/compat.css';
+@import 'tailwindcss/utilities.css';
+
+/* Design tokens (same palette and fonts as before). */
+@theme {
+  --color-primary-50: #eef3fb;
+  --color-primary-100: #dce6f5;
+  --color-primary-200: #b9cceb;
+  --color-primary-300: #8aa8d8;
+  --color-primary-400: #5a80c0;
+  --color-primary-500: #3a5fa3;
+  --color-primary-600: #25447f;
+  --color-primary-700: #1a3466;
+  --color-primary-800: #122650;
+  --color-primary-900: #0c1c3d;
+  --color-primary-950: #081330;
+
+  --color-accent-400: #d9b44a;
+  --color-accent-500: #c49a2c;
+  --color-accent-600: #a67f1d;
+
+  --color-dark: #0f0e17;
+
+  /* Tailwind v3 gray scale, so greys render exactly as they did. */
+  --color-gray-50: #f9fafb;
+  --color-gray-100: #f3f4f6;
+  --color-gray-200: #e5e7eb;
+  --color-gray-300: #d1d5db;
+  --color-gray-400: #9ca3af;
+  --color-gray-500: #6b7280;
+  --color-gray-600: #4b5563;
+  --color-gray-700: #374151;
+  --color-gray-800: #1f2937;
+  --color-gray-900: #111827;
+
+  /* Tailwind v3 type scale line-heights (v4 made them ratios), so text sets exactly as before. */
+  --text-xs--line-height: 1rem;
+  --text-sm--line-height: 1.25rem;
+  --text-base--line-height: 1.5rem;
+  --text-lg--line-height: 1.75rem;
+  --text-xl--line-height: 1.75rem;
+  --text-2xl--line-height: 2rem;
+  --text-3xl--line-height: 2.25rem;
+  --text-4xl--line-height: 2.5rem;
+  --text-5xl--line-height: 1;
+  --text-6xl--line-height: 1;
+
+  --font-sans: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-display: Newsreader, 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, serif;
+}
