@@ -5,3 +5,15 @@
 
 /* <main> wraps the page content; it must not change layout. */
 main { display: block; }
+
+/* FAQ accordion (shadcn Accordion styled with the SAINTS FAQ look). */
+.faq[data-state='open'] { border-color: var(--indigo-700); }
+.faq-trigger {
+  position: relative; width: 100%; padding: 18px 56px 18px 22px; cursor: pointer; background: none; border: 0;
+  font-size: 1.0625rem; line-height: 1.4; font-weight: 600; color: var(--indigo-950); text-align: left;
+}
+.faq-trigger::after {
+  content: '+'; position: absolute; right: 22px; top: 50%; transform: translateY(-50%);
+  font-size: 22px; color: var(--amber-600); transition: transform 0.25s var(--ease-out);
+}
+.faq-trigger[data-state='open']::after { transform: translateY(-50%) rotate(45deg); }

@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import D from '@/components/D';
+import { Button } from '@/components/ui/button';
 import PageHero from '@/components/PageHero';
 import { Fa, delay } from '@/components/ui';
 import { pageMetadata } from '@/lib/seo';
@@ -30,9 +31,9 @@ export default function AbstractPage() {
         title="Abstract Submission"
         lead={<>Abstracts are accepted until <D k="Abstract Deadline" fb="25 November 2026" /> through the online submission form.</>}
         actions={<>
-          <a href={ABSTRACT_FORM} target="_blank" rel="noopener" className="btn btn-primary btn-lg">Submit Abstract <Fa icon="fa-solid fa-arrow-right" className="btn-arrow" /></a>
-          <Link href="#guidelines" className="btn btn-outline-light btn-lg">Read Guidelines</Link>
-          <Link href="/registration" className="btn btn-outline-light btn-lg">Registration &amp; fees</Link>
+          <Button asChild size="lg"><a href={ABSTRACT_FORM} target="_blank" rel="noopener">Submit Abstract <Fa icon="fa-solid fa-arrow-right" className="btn-arrow" /></a></Button>
+          <Button asChild variant="outline" size="lg"><Link href="#guidelines">Read Guidelines</Link></Button>
+          <Button asChild variant="outline" size="lg"><Link href="/registration">Registration &amp; fees</Link></Button>
         </>}
       />
 
@@ -108,7 +109,7 @@ export default function AbstractPage() {
             <p className="eyebrow">Guidelines</p>
             <h2 className="h2">Abstract preparation</h2>
             <p className="body-copy">These requirements apply to every submission.</p>
-            <a href="/assets/SAINTS_Abstract_template.docx" download className="btn btn-navy"><Fa icon="fa-solid fa-file-word" /> Download Abstract Template</a>
+            <Button asChild variant="navy"><a href="/assets/SAINTS_Abstract_template.docx" download><Fa icon="fa-solid fa-file-word" /> Download Abstract Template</a></Button>
             <p className="text-sm text-gray-500 mt-3">SAINTS_Abstract_template.docx</p>
           </div>
           <div className="lg:col-span-7 panel" data-reveal style={delay(100)}>
@@ -172,8 +173,8 @@ export default function AbstractPage() {
           <h2 className="h2">Submit your abstract</h2>
           <p className="body-copy text-lg mb-9">Prepare your abstract in the SAINTS 2027 template, then submit it through the online form.</p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <a href={ABSTRACT_FORM} target="_blank" rel="noopener" className="btn btn-primary btn-lg">Submit Abstract <Fa icon="fa-solid fa-arrow-right" className="btn-arrow" /></a>
-            <a href="/assets/SAINTS_Abstract_template.docx" download className="btn btn-navy btn-lg"><Fa icon="fa-solid fa-download" /> Download Template</a>
+            <Button asChild size="lg"><a href={ABSTRACT_FORM} target="_blank" rel="noopener">Submit Abstract <Fa icon="fa-solid fa-arrow-right" className="btn-arrow" /></a></Button>
+            <Button asChild variant="navy" size="lg"><a href="/assets/SAINTS_Abstract_template.docx" download><Fa icon="fa-solid fa-download" /> Download Template</a></Button>
           </div>
         </div>
       </section>

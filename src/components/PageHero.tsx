@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import type { Route } from 'next';
 import { Fragment, type ReactNode } from 'react';
 import { delay } from './ui';
 
@@ -18,7 +19,7 @@ export function HeroBackdrop() {
   );
 }
 
-export interface Crumb { label: string; href?: string }
+export interface Crumb { label: string; href?: Route }
 
 interface Props {
   crumbs: Crumb[];

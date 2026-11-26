@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import D from '@/components/D';
+import { Button } from '@/components/ui/button';
 import PageHero from '@/components/PageHero';
 import { Fa, SheetImg, delay } from '@/components/ui';
 import { getFees, getSteps } from '@/lib/content';
@@ -38,8 +39,8 @@ export default async function RegistrationPage() {
         title="Registration"
         lead={<>Early bird rates apply until <D k="Early Bird Deadline" fb="20 November 2026" />.</>}
         actions={<>
-          <Link href="#fees" className="btn btn-primary btn-lg">View fees <Fa icon="fa-solid fa-arrow-right" className="btn-arrow" /></Link>
-          <Link href="/abstract" className="btn btn-outline-light btn-lg">Submit Abstract</Link>
+          <Button asChild size="lg"><Link href="#fees">View fees <Fa icon="fa-solid fa-arrow-right" className="btn-arrow" /></Link></Button>
+          <Button asChild variant="outline" size="lg"><Link href="/abstract">Submit Abstract</Link></Button>
         </>}
       />
 
@@ -87,9 +88,9 @@ export default async function RegistrationPage() {
               ))}
             </ol>
             <div id="registration-form" className="reg-form">
-              <a href={REGISTRATION_FORM} target="_blank" rel="noopener" className="btn btn-navy btn-lg">
+              <Button asChild variant="navy" size="lg"><a href={REGISTRATION_FORM} target="_blank" rel="noopener">
                 Open the registration form <Fa icon="fa-solid fa-arrow-up-right-from-square" className="btn-arrow" />
-              </a>
+              </a></Button>
               <p>Keep your payment receipt ready to upload.</p>
             </div>
           </div>

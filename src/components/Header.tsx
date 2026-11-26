@@ -2,10 +2,13 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
+import type { Route } from 'next';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { Fa } from './ui';
 import { LEGACY_EDITIONS } from '@/lib/site';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import { Button } from '@/components/ui/button';
 
 export interface HeaderProps {
   tracks: { id: string; title: string; theme: string }[];
@@ -159,7 +162,7 @@ export default function Header({ tracks, abstractDeadline, conferenceDates, meta
     if (document.activeElement && item.contains(document.activeElement)) (document.activeElement as HTMLElement).blur();
   };
 
-  const navLink = (href: string, label: string) => (
+  const navLink = (href: Route, label: string) => (
     <li key={href}>
       <Link href={href} className={`nav-link${activeHref === href ? ' active' : ''}`}>{label}</Link>
     </li>
@@ -258,9 +261,9 @@ export default function Header({ tracks, abstractDeadline, conferenceDates, meta
             </ul>
 
             <div className="flex items-center gap-2 sm:gap-3 ml-auto lg:ml-0">
-              <Link href="/abstract" className="btn btn-primary nav-cta">
+              <Button asChild className="nav-cta"><Link href="/abstract">
                 <span>Submit<span className="hidden sm:inline">&nbsp;Abstract</span></span> <Fa icon="fa-solid fa-arrow-right" className="btn-arrow" />
-              </Link>
+              </Link></Button>
               <button
                 id="mobile-menu-btn" className="hamburger lg:hidden" aria-label="Toggle navigation menu"
                 aria-expanded={menuOpen} aria-controls="mobile-menu" onClick={() => setMenuOpen(!menuOpen)}
@@ -277,19 +280,20 @@ export default function Header({ tracks, abstractDeadline, conferenceDates, meta
                 <li><Link href="/" className="m-link">Home</Link></li>
                 <li><Link href="/#about" className="m-link">About</Link></li>
                 <li>
-                  <button
-                    className="mobile-accordion-btn m-link w-full flex items-center justify-between"
-                    aria-expanded={accordion === 'speakers'} onClick={() => setAccordion(accordion === 'speakers' ? null : 'speakers')}
-                  >
-                    Speakers <Fa icon="fa-solid fa-chevron-down" className="text-xs" />
-                  </button>
-                  <div id="mobile-speakers" className={`mobile-submenu${accordion === 'speakers' ? ' open' : ''}`}>
-                    <ul>
+                  <Accordion type="single" collapsible value={accordion === 'speakers' ? 'speakers' : ''} onValueChange={(v) => setAccordion(v ? 'speakers' : null)}>
+                    <AccordionItem value="speakers" className="border-0">
+                      <AccordionTrigger className="mobile-accordion-btn m-link w-full items-center">
+                        Speakers <Fa icon="fa-solid fa-chevron-down" className="text-xs" />
+                      </AccordionTrigger>
+                      <AccordionContent>
+                        <ul className="pl-[14px]">
                       {tracks.map((t) => (
                         <li key={t.id}><Link href={`/track/${t.id}`} className="m-sublink">{t.title}{t.theme ? `: ${t.theme}` : ''}</Link></li>
                       ))}
-                    </ul>
-                  </div>
+                        </ul>
+                      </AccordionContent>
+                    </AccordionItem>
+                  </Accordion>
                 </li>
                 <li><Link href="/registration" className="m-link">Registration</Link></li>
                 <li><Link href="/#publications" className="m-link">Publications</Link></li>
@@ -297,23 +301,24 @@ export default function Header({ tracks, abstractDeadline, conferenceDates, meta
                 <li><Link href="/#gallery" className="m-link">Gallery</Link></li>
                 <li><Link href="/committee" className="m-link">Committee</Link></li>
                 <li>
-                  <button
-                    className="mobile-accordion-btn m-link w-full flex items-center justify-between"
-                    aria-expanded={accordion === 'legacy'} onClick={() => setAccordion(accordion === 'legacy' ? null : 'legacy')}
-                  >
-                    Legacy <Fa icon="fa-solid fa-chevron-down" className="text-xs" />
-                  </button>
-                  <div id="mobile-legacy" className={`mobile-submenu${accordion === 'legacy' ? ' open' : ''}`}>
-                    <ul>
+                  <Accordion type="single" collapsible value={accordion === 'legacy' ? 'legacy' : ''} onValueChange={(v) => setAccordion(v ? 'legacy' : null)}>
+                    <AccordionItem value="legacy" className="border-0">
+                      <AccordionTrigger className="mobile-accordion-btn m-link w-full items-center">
+                        Legacy <Fa icon="fa-solid fa-chevron-down" className="text-xs" />
+                      </AccordionTrigger>
+                      <AccordionContent>
+                        <ul className="pl-[14px]">
                       {LEGACY_EDITIONS.map((e) => (
                         <li key={e.label}><a href={e.href} target="_blank" rel="noopener" className="m-sublink">{e.label}</a></li>
                       ))}
-                    </ul>
-                  </div>
+                        </ul>
+                      </AccordionContent>
+                    </AccordionItem>
+                  </Accordion>
                 </li>
                 <li className="m-cta">
-                  <Link href="/abstract" className="btn btn-primary justify-center">Submit Abstract <Fa icon="fa-solid fa-arrow-right" className="btn-arrow" /></Link>
-                  <Link href="/registration" className="btn btn-ghost justify-center">Register</Link>
+                  <Button asChild className="justify-center"><Link href="/abstract">Submit Abstract <Fa icon="fa-solid fa-arrow-right" className="btn-arrow" /></Link></Button>
+                  <Button asChild variant="ghost" className="justify-center"><Link href="/registration">Register</Link></Button>
                 </li>
                 <li className="m-contact"><a href={`mailto:${contactEmail}`}><Fa icon="fa-regular fa-envelope" /> {contactEmail}</a></li>
               </ul>

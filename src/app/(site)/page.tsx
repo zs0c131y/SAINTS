@@ -16,6 +16,8 @@ import {
 import { fmtDate, isHttp, numberWord, pad2, sized } from '@/lib/format';
 import { richText, sanitize } from '@/lib/sanitize';
 import { HERO_LOGO, OG_IMAGE, SCHOOL_URL, SITE_DESCRIPTION, SITE_NAME, SITE_TITLE, SITE_URL, VENUE_MAP } from '@/lib/site';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import { Button } from '@/components/ui/button';
 
 export const revalidate = 60;
 
@@ -102,8 +104,8 @@ export default async function HomePage() {
               Scientific Advances in Natural &amp; Technological Sciences
             </h1>
             <div className="flex flex-col sm:flex-row gap-3 mt-9" data-reveal style={delay(160)}>
-              <Link href="/abstract" className="btn btn-primary btn-lg">Submit Abstract <Fa icon="fa-solid fa-arrow-right" className="btn-arrow" /></Link>
-              <Link href="/#about" className="btn btn-outline-light btn-lg">About the conference</Link>
+              <Button asChild size="lg"><Link href="/abstract">Submit Abstract <Fa icon="fa-solid fa-arrow-right" className="btn-arrow" /></Link></Button>
+              <Button asChild variant="outline" size="lg"><Link href="/#about">About the conference</Link></Button>
             </div>
           </div>
 
@@ -249,7 +251,7 @@ export default async function HomePage() {
               <li>Oral and poster presentation formats</li>
               <li>Peer-reviewed by the scientific committee</li>
             </ul>
-            <Link href="/abstract" className="btn btn-navy mt-6">Submit Abstract <Fa icon="fa-solid fa-arrow-right" className="btn-arrow" /></Link>
+            <Button asChild variant="navy" className="mt-6"><Link href="/abstract">Submit Abstract <Fa icon="fa-solid fa-arrow-right" className="btn-arrow" /></Link></Button>
           </div>
 
           <div className="panel" id="publications" data-reveal style={delay(120)}>
@@ -335,14 +337,16 @@ export default async function HomePage() {
         <section id="faq" className="section section-paper">
           <div className="container mx-auto max-w-3xl">
             <div className="mb-10" data-reveal><h2 className="h2">Frequently asked questions</h2></div>
-            <div className="faqs">
+            <Accordion type="single" collapsible className="faqs">
               {faqs.map((r, i) => (
-                <details className="faq" key={r.faq_id ?? i} data-reveal>
-                  <summary>{r.faq_question}</summary>
-                  <div className="faq-a" dangerouslySetInnerHTML={{ __html: richText(r.faq_answer ?? '') }} />
-                </details>
+                <AccordionItem value={r.faq_id ?? String(i)} className="faq border" key={r.faq_id ?? i} data-reveal>
+                  <AccordionTrigger className="faq-trigger">{r.faq_question}</AccordionTrigger>
+                  <AccordionContent className="faq-a">
+                    <div dangerouslySetInnerHTML={{ __html: richText(r.faq_answer ?? '') }} />
+                  </AccordionContent>
+                </AccordionItem>
               ))}
-            </div>
+            </Accordion>
           </div>
         </section>
       )}
@@ -355,8 +359,8 @@ export default async function HomePage() {
             Abstracts are accepted until <D k="Abstract Deadline" fb="25 November 2026" />. Registration closes on <D k="Final Registration" fb="31 December 2026" />.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <Link href="/abstract" className="btn btn-primary btn-lg">Submit Abstract <Fa icon="fa-solid fa-arrow-right" className="btn-arrow" /></Link>
-            <Link href="/registration" className="btn btn-outline-light btn-lg">Registration &amp; fees</Link>
+            <Button asChild size="lg"><Link href="/abstract">Submit Abstract <Fa icon="fa-solid fa-arrow-right" className="btn-arrow" /></Link></Button>
+            <Button asChild variant="outline" size="lg"><Link href="/registration">Registration &amp; fees</Link></Button>
           </div>
         </div>
       </section>

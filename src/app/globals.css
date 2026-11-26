@@ -11,6 +11,7 @@
 @import 'tailwindcss/preflight.css';
 @import '../styles/compat.css';
 @import 'tailwindcss/utilities.css';
+@import 'tw-animate-css';
 
 /* Design tokens (same palette and fonts as before). */
 @theme {
@@ -58,4 +59,51 @@
 
   --font-sans: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   --font-display: Newsreader, 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, serif;
+}
+
+/* shadcn/ui theme: semantic tokens mapped onto the SAINTS palette (navy, gold, paper). */
+:root {
+  --radius: 0.25rem;
+  --background: #ffffff;
+  --foreground: #1f2937;
+  --card: #ffffff;
+  --card-foreground: #1f2937;
+  --popover: #ffffff;
+  --popover-foreground: #1f2937;
+  --primary: #1a3466;
+  --primary-foreground: #ffffff;
+  --secondary: #eef3fb;
+  --secondary-foreground: #081330;
+  --muted-foreground: #6b7280;
+  --accent: #eef3fb;
+  --accent-foreground: #081330;
+  --destructive: #b42318;
+  --border: #e5e2d8;
+  --input: #e5e2d8;
+  --ring: #25447f;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: #f8f6f0;
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-sm: calc(var(--radius) - 2px);
+  --radius-md: var(--radius);
+  --radius-lg: calc(var(--radius) + 2px);
+  --radius-xl: calc(var(--radius) + 6px);
 }

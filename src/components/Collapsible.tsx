@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, type ReactNode } from 'react';
+import { Button } from '@/components/ui/button';
 
 interface Props {
   className: string;
@@ -19,9 +20,9 @@ export default function Collapsible({ className, count, limit, children }: Props
       <div className={className} data-collapsed={!open && count > limit} style={{ ['--limit' as string]: limit }}>{children}</div>
       {count > limit && (
         <div className="more-wrap">
-          <button type="button" className="btn btn-ghost" aria-expanded={open} onClick={() => setOpen((o) => !o)}>
+          <Button type="button" variant="ghost" aria-expanded={open} onClick={() => setOpen((o) => !o)}>
             {open ? 'Show fewer' : `Show all ${count}`}
-          </button>
+          </Button>
         </div>
       )}
     </>
