@@ -412,7 +412,8 @@
   const LOCAL_PHOTOS = [
     [/ribeiro/i, 'assets/images/speakers/vinay-j-ribeiro.jpg'],
     [/maidin/i, 'assets/images/speakers/siti-sarah-maidin.jpg'],
-    [/rathore/i, 'assets/images/speakers/vijay-singh-rathore.jpg']
+    [/rathore/i, 'assets/images/speakers/vijay-singh-rathore.jpg'],
+    [/sprick/i, 'assets/images/speakers/barbara-sprick.jpg']
   ];
   const localPhoto = s => (LOCAL_PHOTOS.find(p => p[0].test(s.speaker_fullname || '')) || [])[1] || '';
   function speakerCard(s) {
