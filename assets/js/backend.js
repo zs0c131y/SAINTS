@@ -396,12 +396,40 @@
   }
 
   // /track?track=N → speakers + schedule for that track
+  // Filled head-and-shoulders, cropped at the bottom edge like a portrait.
+  function avatar() {
+    const NS = 'http://www.w3.org/2000/svg';
+    const svg = document.createElementNS(NS, 'svg');
+    svg.setAttribute('viewBox', '0 0 88 88'); svg.setAttribute('class', 'speaker-avatar'); svg.setAttribute('aria-hidden', 'true');
+    const head = document.createElementNS(NS, 'circle');
+    head.setAttribute('cx', '44'); head.setAttribute('cy', '35'); head.setAttribute('r', '16');
+    const body = document.createElementNS(NS, 'path');
+    body.setAttribute('d', 'M8 92c0-21 16-35 36-35s36 14 36 35z');
+    svg.append(head, body);
+    return svg;
+  }
+  // Photos served from this site until they are uploaded to Cloudinary. A photo set in the sheet always wins.
+  const LOCAL_PHOTOS = [
+    [/ribeiro/i, 'assets/images/speakers/vinay-j-ribeiro.jpg'],
+    [/maidin/i, 'assets/images/speakers/siti-sarah-maidin.jpg'],
+    [/rathore/i, 'assets/images/speakers/vijay-singh-rathore.jpg'],
+    [/sprick/i, 'assets/images/speakers/barbara-sprick.jpg']
+  ];
+  const localPhoto = s => (LOCAL_PHOTOS.find(p => p[0].test(s.speaker_fullname || '')) || [])[1] || '';
   function speakerCard(s) {
     const card = el('article', 'speaker');
     const ph = el('div', 'speaker-photo');
-    const placeholder = () => { ph.classList.add('no-photo'); ph.textContent = ''; const i = el('i', 'fa-solid fa-user'); i.setAttribute('aria-hidden', 'true'); ph.appendChild(i); };
-    if (isHttp(s.speaker_image)) { const img = photo(s.speaker_image, 160, s.speaker_fullname); img.onerror = placeholder; ph.appendChild(img); }
-    else placeholder();
+    const placeholder = () => { ph.classList.add('no-photo'); ph.textContent = ''; ph.appendChild(avatar()); };
+    // Sheet photo first; if it is missing or fails to load (e.g. an expired link), the local copy, then the placeholder.
+    const urls = [isHttp(s.speaker_image) ? s.speaker_image : '', localPhoto(s)].filter(Boolean);
+    const tryNext = () => {
+      const u = urls.shift();
+      if (!u) { placeholder(); return; }
+      const img = photo(u, 160, s.speaker_fullname);
+      img.onerror = tryNext;
+      ph.textContent = ''; ph.appendChild(img);
+    };
+    tryNext();
     const txt = el('div', 'speaker-text');
     txt.append(el('h4', 'speaker-name', s.speaker_fullname), el('p', 'speaker-aff', s.speaker_affiliation));
     card.append(ph, txt);
