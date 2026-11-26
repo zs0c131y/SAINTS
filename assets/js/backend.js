@@ -396,18 +396,22 @@
   }
 
   // /track?track=N → speakers + schedule for that track
-  // "Prof. (Dr.) Vijay Singh Rathore" → "VR": first and last name, honorifics dropped.
-  const HONORIFIC = /^\(?(prof|professor|dr|mr|mrs|ms|miss|er|sri|shri|smt|rev|fr|sr)\.?\)?$/i;
-  function initials(name) {
-    const w = (name || '').split(/\s+/).filter(x => x && !HONORIFIC.test(x) && /\p{L}/u.test(x));
-    if (!w.length) return '';
-    const first = x => x.match(/\p{L}/u)[0].toUpperCase();
-    return w.length === 1 ? first(w[0]) : first(w[0]) + first(w[w.length - 1]);
+  // Filled head-and-shoulders, cropped at the bottom edge like a portrait.
+  function avatar() {
+    const NS = 'http://www.w3.org/2000/svg';
+    const svg = document.createElementNS(NS, 'svg');
+    svg.setAttribute('viewBox', '0 0 88 88'); svg.setAttribute('class', 'speaker-avatar'); svg.setAttribute('aria-hidden', 'true');
+    const head = document.createElementNS(NS, 'circle');
+    head.setAttribute('cx', '44'); head.setAttribute('cy', '35'); head.setAttribute('r', '16');
+    const body = document.createElementNS(NS, 'path');
+    body.setAttribute('d', 'M8 92c0-21 16-35 36-35s36 14 36 35z');
+    svg.append(head, body);
+    return svg;
   }
   function speakerCard(s) {
     const card = el('article', 'speaker');
     const ph = el('div', 'speaker-photo');
-    const placeholder = () => { ph.classList.add('no-photo'); ph.textContent = ''; const i = el('span', 'speaker-initials', initials(s.speaker_fullname)); i.setAttribute('aria-hidden', 'true'); ph.appendChild(i); };
+    const placeholder = () => { ph.classList.add('no-photo'); ph.textContent = ''; ph.appendChild(avatar()); };
     if (isHttp(s.speaker_image)) { const img = photo(s.speaker_image, 160, s.speaker_fullname); img.onerror = placeholder; ph.appendChild(img); }
     else placeholder();
     const txt = el('div', 'speaker-text');
