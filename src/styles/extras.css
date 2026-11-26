@@ -1,0 +1,7 @@
+/* Additions for the Next.js port (kept apart from main.css so that file stays as designed). */
+
+/* Collapsed "Places to visit": only the first --limit cards show (set by <Collapsible>). */
+.places[data-collapsed='true'] > :nth-child(n + 5) { display: none; }
+
+/* <main> wraps the page content; it must not change layout. */
+main { display: block; }

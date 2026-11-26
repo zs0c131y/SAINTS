@@ -1,10 +1,14 @@
-# fly.toml app configuration file generated for saints on 2026-11-20T10:02:08Z
+# Fly.io app configuration. Deploy with `fly deploy` (builds the Dockerfile).
 #
-# See https://docs.fly.io/reference/configuration for information about how to use this file.
-#
+# Runtime secrets (optional): `fly secrets set REVALIDATE_SECRET=...` to enable POST /api/revalidate.
 
 app = 'saints'
 primary_region = 'sin'
+
+[build]
+
+[env]
+  SHEET_REVALIDATE_SECONDS = '60'
 
 [http_service]
   internal_port = 8080
@@ -14,7 +18,14 @@ primary_region = 'sin'
   min_machines_running = 1
   processes = ['app']
 
+  [[http_service.checks]]
+    grace_period = '15s'
+    interval = '30s'
+    method = 'GET'
+    timeout = '5s'
+    path = '/api/health'
+
 [[vm]]
   cpu_kind = 'shared'
   cpus = 1
-  memory = '256mb'
+  memory = '512mb'

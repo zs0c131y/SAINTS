@@ -1,20 +1,39 @@
 {
   "name": "saints-2027",
+  "version": "2.0.0",
   "private": true,
-  "description": "SAINTS 2027 conference website (static). Run `npm run build:css` after changing Tailwind classes in the HTML or JS, or editing assets/styles/main.css (it also writes main.min.css, which the pages load), and `npm run snapshot` after the Google Sheet changes.",
+  "description": "SAINTS 2027 conference website (Next.js). Content comes from a Google Sheet.",
+  "engines": {
+    "node": ">=20.9"
+  },
   "scripts": {
-    "dev": "sirv . --dev --host 127.0.0.1 --port 8080",
-    "build:css": "tailwindcss -c tailwind.config.js -i assets/styles/tailwind.src.css -o assets/styles/tailwind.css --minify && esbuild assets/styles/main.css --minify --outfile=assets/styles/main.min.css",
-    "snapshot": "node tools/snapshot.js",
-    "stamp": "node tools/stamp.js",
-    "netlify": "npm run build:css && npm run stamp && node tools/netlify.js"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "snapshot": "node scripts/snapshot.mjs",
+    "check": "npm run lint && npm run typecheck && npm run test && npm run build"
+  },
+  "dependencies": {
+    "next": "^16.4.6",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "sanitize-html": "^2.18.2",
+    "server-only": "^0.0.1"
   },
   "devDependencies": {
-    "esbuild": "^0.28.2",
-    "sirv-cli": "^3.0.1",
-    "tailwindcss": "3.4.17"
-  },
-  "allowScripts": {
-    "esbuild@0.28.2": true
+    "@types/node": "^26.6.11",
+    "@types/react": "^19.3.3",
+    "@types/react-dom": "^19.3.0",
+    "@types/sanitize-html": "^2.16.2",
+    "autoprefixer": "^10.7.0",
+    "eslint": "^9.39.5",
+    "eslint-config-next": "^16.4.6",
+    "postcss": "^8.5.33",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5.9.3",
+    "vitest": "^5.1.2"
   }
 }

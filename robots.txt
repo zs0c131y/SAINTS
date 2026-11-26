@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://saints.christuniversity.in/sitemap.xml

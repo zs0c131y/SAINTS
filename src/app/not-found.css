@@ -1,0 +1,137 @@
+/* 404 page (ported from the static site). Scoped under .nf so it cannot leak into the main design. */
+    .nf {
+  color-scheme: light;
+  --navy: #081330;
+  --muted: #484e5d;
+  --paper: #f8f6f0;
+  --line: #ded9cb;
+  --gold: #d9b44a;
+  --serif: Newsreader, Georgia, serif;
+  font-family: Inter, system-ui, sans-serif;
+  color: var(--navy);
+  background: var(--paper);
+  min-height: 100vh;
+}
+.nf *, .nf *::before, .nf *::after { box-sizing: border-box; }
+.nf { margin: 0; }
+.nf a { color: inherit; }
+.nf a:focus-visible { outline: 2px solid #25447f; outline-offset: 4px; }
+.nf .frame { width: min(100% - 3rem, 72rem); margin-inline: auto; }
+.nf .masthead { border-bottom: 1px solid var(--line); }
+.nf .masthead .frame {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.75rem, 2vw, 1.4rem);
+  min-height: 4.75rem;
+}
+.nf .brand { display: block; }
+.nf .brand img { display: block; width: clamp(6.25rem, 24vw, 8.125rem); height: auto; }
+.nf .brand + .brand {
+  border-left: 1px solid var(--line);
+  padding-left: clamp(0.75rem, 2vw, 1.4rem);
+}
+.nf .layout {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(2rem, 6vw, 6rem);
+  align-items: center;
+  padding-block: clamp(2.75rem, 5.8vw, 5rem);
+}
+.nf .art {
+  position: relative;
+  overflow: hidden;
+  margin: 0;
+  border-radius: 0.75rem;
+  background: #081226;
+}
+.nf .art img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: contain;
+}
+.nf .art::after {
+  content: "";
+  position: absolute;
+  inset: 0.875rem;
+  border: 1px solid rgb(217 180 74 / 48%);
+  border-radius: 0.35rem;
+  pointer-events: none;
+}
+.nf h1 {
+  margin: 0;
+  font: 700 clamp(2.75rem, 5.5vw, 5rem)/0.98 var(--serif);
+  letter-spacing: -0.04em;
+}
+.nf .code {
+  display: block;
+  width: fit-content;
+  margin-bottom: 1.15rem;
+  padding-bottom: 0.2em;
+  border-bottom: 3px solid var(--gold);
+  color: #1a3466;
+  font-size: clamp(5rem, 9vw, 8.5rem);
+  line-height: 0.75;
+  letter-spacing: -0.045em;
+}
+.nf .lead {
+  max-width: 32ch;
+  margin: 1.15rem 0 1.7rem;
+  color: var(--muted);
+  font-size: clamp(1rem, 1.6vw, 1.125rem);
+  line-height: 1.65;
+}
+.nf .home {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  min-height: 3rem;
+  padding: 0.625rem 1.15rem;
+  border-radius: 0.35rem;
+  background: var(--navy);
+  color: #fff;
+  font-weight: 650;
+  text-decoration: none;
+}
+.nf .home:hover { background: #1a3466; }
+.nf .home span { color: var(--gold); }
+.nf .shortcuts { margin-top: 1.65rem; border-top: 1px solid var(--line); }
+.nf .shortcuts ul {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 1.2rem;
+  margin: 0.6rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+.nf .shortcuts a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  min-height: 2.75rem;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+.nf .shortcuts a:hover, .nf .shortcuts a:focus-visible { text-decoration: underline; text-underline-offset: 0.25em; }
+.nf .support {
+  padding-block: 1.15rem 1.5rem;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  line-height: 1.7;
+  font-size: 0.875rem;
+}
+.nf .support p { margin: 0; }
+.nf .support a { font-weight: 600; text-underline-offset: 0.18em; overflow-wrap: anywhere; }
+@media (max-width: 760px) {
+  .nf .frame { width: min(100% - 2rem, 32rem); }
+  .nf .masthead .frame { min-height: 3.75rem; }
+  .nf .layout { grid-template-columns: minmax(0, 1fr); gap: 1.5rem; padding-block: 2rem 1.4rem; }
+  .nf .art::after { inset: 0.625rem; }
+  .nf .code { margin-bottom: 0.85rem; }
+  .nf .lead { margin-block: 0.75rem 1.2rem; }
+  .nf .shortcuts { margin-top: 1.15rem; }
+  .nf .shortcuts ul { margin-top: 0.3rem; }
+}
+  

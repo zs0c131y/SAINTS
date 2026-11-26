@@ -1,7 +1,7 @@
-.git
-.gitignore
 node_modules
-README.md
+.next
+.git
+.github
+*.md
+.env*
 Dockerfile
-.dockerignore
-fly.toml
