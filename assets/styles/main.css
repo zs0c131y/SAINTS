@@ -660,6 +660,11 @@ footer > .container:first-child { padding-top: calc(var(--section-y) * 0.6); pad
 @media (min-width: 1024px) { .cm-list { grid-template-columns: repeat(3, 1fr); } }
 .cm-member { display: flex; align-items: center; gap: 14px; }
 .cm-member img { width: 96px; height: 96px; border-radius: 18px; object-fit: cover; object-position: center top; flex-shrink: 0; }
+/* Photos shot on plain white: a faint tile behind, with the photo multiplied onto it so the white takes the tint. */
+.cm-tint { position: relative; }
+.cm-tint::before { content: ""; position: absolute; left: 0; top: 50%; transform: translateY(-50%); width: 96px; height: 96px;
+  border-radius: 18px; background: linear-gradient(160deg, #e9f0f8 0%, #d3e0ef 100%); }
+.cm-tint img { position: relative; mix-blend-mode: multiply; }
 .cm-name { font-weight: 600; color: var(--indigo-950); }
 .cm-desig { font-size: 13px; color: #6b7280; line-height: 1.4; }
 

@@ -536,9 +536,10 @@
   }
 
   // Committee photos served from this site until they are added to the sheet. A photo set in the sheet always wins.
+  // A third value of 'tint' marks a photo shot on a plain white background: it gets a faint tile behind it (.cm-tint).
   const LOCAL_MEMBER_PHOTOS = [
-    [/jobi/i, 'assets/images/committee/jobi-xavier.jpg'],
-    [/sabu/i, 'assets/images/committee/sabu-thomas.jpg'],
+    [/jobi/i, 'assets/images/committee/jobi-xavier.jpg', 'tint'],
+    [/sabu/i, 'assets/images/committee/sabu-thomas.jpg', 'tint'],
     [/manoj/i, 'assets/images/committee/manoj-b.jpg'],
     [/sunaja/i, 'assets/images/committee/sunaja-devi.jpg'],
     [/smita/i, 'assets/images/committee/smita-nagouda.jpg'],
@@ -547,7 +548,8 @@
     [/nainesh/i, 'assets/images/committee/nainesh-patel.jpg'],
     [/rajesh\s+kanna/i, 'assets/images/committee/rajesh-kanna.jpg']
   ];
-  const localMemberPhoto = m => (LOCAL_MEMBER_PHOTOS.find(p => p[0].test(m.member_fullname || '')) || [])[1] || '';
+  const localMember = m => LOCAL_MEMBER_PHOTOS.find(p => p[0].test(m.member_fullname || '')) || [];
+  const localMemberPhoto = m => localMember(m)[1] || '';
 
   // organizing_committee (/committee) — grouped by role in sheet order
   function renderCommittee() {
@@ -571,6 +573,7 @@
           if (img) { img.remove(); img = null; }
           if (!u) return;
           img = photo(u, 160, m.member_fullname);
+          li.classList.toggle('cm-tint', localMember(m)[2] === 'tint' && u === localMemberPhoto(m));
           img.onerror = tryNext;
           li.insertBefore(img, li.firstChild);
         };
