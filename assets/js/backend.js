@@ -535,6 +535,20 @@
     reveal(box); show(box.closest('section'));
   }
 
+  // Committee photos served from this site until they are added to the sheet. A photo set in the sheet always wins.
+  const LOCAL_MEMBER_PHOTOS = [
+    [/jobi/i, 'assets/images/committee/jobi-xavier.jpg'],
+    [/sabu/i, 'assets/images/committee/sabu-thomas.jpg'],
+    [/manoj/i, 'assets/images/committee/manoj-b.jpg'],
+    [/sunaja/i, 'assets/images/committee/sunaja-devi.jpg'],
+    [/smita/i, 'assets/images/committee/smita-nagouda.jpg'],
+    [/rupali/i, 'assets/images/committee/rupali-wagh.jpg'],
+    [/nimitha/i, 'assets/images/committee/nimitha-john.jpg'],
+    [/nainesh/i, 'assets/images/committee/nainesh-patel.jpg'],
+    [/rajesh\s+kanna/i, 'assets/images/committee/rajesh-kanna.jpg']
+  ];
+  const localMemberPhoto = m => (LOCAL_MEMBER_PHOTOS.find(p => p[0].test(m.member_fullname || '')) || [])[1] || '';
+
   // organizing_committee (/committee) — grouped by role in sheet order
   function renderCommittee() {
     const box = $('[data-sheet="organizing_committee"]');
@@ -549,7 +563,18 @@
       const ul = el('ul', 'cm-list');
       members.forEach(m => {
         const li = el('li', 'cm-member');
-        if (isHttp(m.member_image)) li.appendChild(photo(m.member_image, 160, m.member_fullname));
+        // Sheet photo first; if it is missing or fails to load, the local copy; otherwise no photo, as before.
+        const urls = [isHttp(m.member_image) ? m.member_image : '', localMemberPhoto(m)].filter(Boolean);
+        let img = null;
+        const tryNext = () => {
+          const u = urls.shift();
+          if (img) { img.remove(); img = null; }
+          if (!u) return;
+          img = photo(u, 160, m.member_fullname);
+          img.onerror = tryNext;
+          li.insertBefore(img, li.firstChild);
+        };
+        tryNext();
         const t = el('div'); t.appendChild(el('p', 'cm-name', m.member_fullname));
         if (m.member_designation) t.appendChild(el('p', 'cm-desig', m.member_designation));
         li.appendChild(t); ul.appendChild(li);
